@@ -17,7 +17,12 @@ class AuthController extends Controller
         $request->validate([
             'email'     => 'email|required',
             'password'  => 'required'
-        ]);
+        ],
+    [
+        'email.email'   => 'Kolom Email harus diisi dengan email yang valid!',
+        'email.required'   => 'Kolom Email tidak boleh kosong!',
+        'password.required' => 'Kolom Password tidak boleh kosong!'
+    ]);
 
         $remember = $request->remember ? true :false;
 
@@ -26,7 +31,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
 
-            return redirect()->intended('/')->with('success', 'Selamat! Anda berhasil login');
+            return redirect()->intended('/siswa')->with('success', 'Selamat! Anda berhasil login');
         }
 
         return back()->withErrors([

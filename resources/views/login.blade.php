@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentelella Alela! | </title>
+    <title>Laravel 9 CRUD With Auth </title>
 
     <!-- Bootstrap -->
     <link href="{{asset('style/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -17,6 +17,9 @@
     <link href="{{asset('style/nprogress/nprogress.css')}}" rel="stylesheet">
     <!-- Animate.css -->
     <link href="{{asset('style/animate.css/animate.min.css')}}" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ asset('style/sweetalert2/sweetalert2.css') }}">
+    <script src="{{ asset('style/sweetalert2/sweetalert2.min.js') }}"></script>
 
     <!-- Custom Theme Style -->
     <link href="{{asset('style/css/custom.min.css')}}" rel="stylesheet">
@@ -30,6 +33,15 @@
             <form method="POST" accept="{{ route('loginStore') }}">
               @csrf
               <h1>Login Form</h1>
+              @if ($errors->any())
+                  <div class="alert alert-danger">
+                    <ul>
+                      @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                      @endforeach
+                    </ul>
+                  </div>
+              @endif
               <div>
                 <input type="text" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="Email" name="email" />
               </div>
@@ -47,12 +59,18 @@
               </div>
 
               <div class="clearfix"></div>
-
-           
             </form>
           </section>
         </div>
       </div>
     </div>
+    <script>
+      @if (session()->has('success'))
+        Swal.fire({
+          icon: 'success',
+          title: "{{ session('success') }}"
+        })
+      @endif
+    </script>
   </body>
 </html>

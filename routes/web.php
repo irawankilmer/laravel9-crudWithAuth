@@ -15,10 +15,14 @@ use App\Http\Controllers\AuthController;
 |
 */
 
+Route::get('/', function() {
+    return redirect('siswa');
+});
+
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('loginStore');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function() {
-    Route::resource('', StudentController::class);
+    Route::resource('siswa', StudentController::class);
 });
