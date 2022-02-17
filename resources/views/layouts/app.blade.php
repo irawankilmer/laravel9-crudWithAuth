@@ -20,13 +20,28 @@
     <link href="{{asset('style/animate.css/animate.min.css')}}" rel="stylesheet">
 
     @stack('style')
-
+    <link rel="stylesheet" href="{{ asset('style/sweetalert2/sweetalert2.css') }}">
     <!-- Custom Theme Style -->
     <link href="{{asset('style/css/custom.min.css')}}" rel="stylesheet">
 
     <!-- Datatables -->
     
-    
+    <script>
+      document.getElementById('delete').onclick = function() {
+        swal({
+          title: "Are you sure ?",
+          text: "Data dihapus",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: '#DD6B55',
+          confirmButtonColor: 'Yes, Delete it',
+          closeOnConfirm: false
+        },
+        function() {
+          swal("Deleted!", "Data berhasil di hapus", "success");
+        });
+      };
+    </script>
 
   </head>
 
@@ -36,7 +51,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Laravel 9 CRUD</span></a>
+              <a href="{{ url('siswa') }}" class="site_title"><i class="fa fa-paw"></i> <span>Laravel 9 CRUD</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -183,6 +198,8 @@
     <script src="{{asset('style/nprogress/nprogress.js')}}"></script>
     <!-- iCheck -->
     <script src="{{asset('style/iCheck/icheck.min.js')}}"></script>
+    <script src="{{ asset('style/sweetalert2/sweetalert2.min.js') }}"></script>
+
     
     @stack('scripts')
 

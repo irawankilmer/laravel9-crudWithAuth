@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Student;
+use PHPUnit\Framework\MockObject\Builder\Stub;
 
 class StudentController extends Controller
 {
@@ -26,7 +27,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        return view('crud.create');
     }
 
     /**
@@ -37,7 +38,7 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**
@@ -82,6 +83,12 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        dd($id);
+        $student = Student::find($id);
+
+
+        $student->delete();
+
+
+        return redirect('siswa')->with('success', 'Selamat! Anda berhasil dihapus');
     }
 }

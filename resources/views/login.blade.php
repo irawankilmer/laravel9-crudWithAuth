@@ -33,19 +33,18 @@
             <form method="POST" accept="{{ route('loginStore') }}">
               @csrf
               <h1>Login Form</h1>
-              @if ($errors->any())
-                  <div class="alert alert-danger">
-                    <ul>
-                      @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                      @endforeach
-                    </ul>
-                  </div>
-              @endif
+          
               <div>
+                @error('email')
+                  <span class="badge badge-danger">{{ $message }}</span>
+                @enderror
                 <input type="text" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="Email" name="email" />
               </div>
+
               <div>
+                @error('password')
+                  <span class="badge badge-danger">{{ $message }}</span>
+                @enderror
                 <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password" />
               </div>
 

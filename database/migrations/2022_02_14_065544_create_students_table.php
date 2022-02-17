@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('nisn')->unique();
             $table->string('nis')->unique();
             $table->string('fullName');
-            $table->enum('gender', ['Laki - laki', 'Perempuan']);
+            $table->enum('gender', ['Laki - laki', 'Perempuan'])->default('Laki - laki');
             $table->string('phone')->nullable();
             $table->longText('address')->nullable();
             $table->string('avatar');

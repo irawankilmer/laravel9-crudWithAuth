@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\AuthRequest;
 
 class AuthController extends Controller
 {
@@ -12,18 +13,8 @@ class AuthController extends Controller
         return view('login');
     }
 
-    public function login(Request $request)
+    public function login(AuthRequest $request)
     {   
-        $request->validate([
-            'email'     => 'email|required',
-            'password'  => 'required'
-        ],
-    [
-        'email.email'   => 'Kolom Email harus diisi dengan email yang valid!',
-        'email.required'   => 'Kolom Email tidak boleh kosong!',
-        'password.required' => 'Kolom Password tidak boleh kosong!'
-    ]);
-
         $remember = $request->remember ? true :false;
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $remember)) {

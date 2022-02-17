@@ -7,8 +7,6 @@
 <link href="{{asset('style/datatables.net-responsive-bs/css/responsive.bootstrap.min.css')}}" rel="stylesheet">
 <link href="{{asset('style/datatables.net-scroller-bs/css/scroller.bootstrap.min.css')}}" rel="stylesheet">
 
-<link rel="stylesheet" href="{{ asset('style/sweetalert2/sweetalert2.css') }}">
-    <script src="{{ asset('style/sweetalert2/sweetalert2.min.js') }}"></script>
 @endpush
 
 @section('content')
@@ -86,7 +84,7 @@
                                 <form class="d-inline" action="{{ url('/siswa/'.$student->id) }}" method="post">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" id="delete" class="btn btn-sm btn-danger" title="Delete">
+                                    <button class="btn btn-sm btn-danger delete-confirm" data-toggle="tooltip" title="Delete">
                                       <i class="fa fa-trash"></i>
                                     </button>
                                 </form>
@@ -131,19 +129,43 @@
     <script src="{{asset('style/pdfmake/build/pdfmake.min.js')}}"></script>
     <script src="{{asset('style/pdfmake/build/vfs_fonts.js')}}"></script>
     <script>
-      document.getElementById('delete').onclick = function() {
-        swal({
-          title: "Are you sure ?",
-          text: "Data dihapus",
-          type: "warning",
+      $('.delete-confirm').click(function(event){
+
+        const swalWithBootstrapButtons = Swal.mixin({
+          customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+          },
+          buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
           showCancelButton: true,
-          confirmButtonColor: '#DD6B55',
-          confirmButtonColor: 'Yes, Delete it',
-          closeOnConfirm: false
-        },
-        function() {
-          swal("Deleted!", "Data berhasil di hapus", "success");
-        });
-      };
+          confirmButtonText: 'Yes, delete it!',
+          cancelButtonText: 'No, cancel!',
+          reverseButtons: true
+        }).then((result) => {
+          if (result.isConfirmed) {
+            swalWithBootstrapButtons.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            )
+          } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+          ) {
+            swalWithBootstrapButtons.fire(
+              'Cancelled',
+              'Your imaginary file is safe :)',
+              'error'
+            )
+          }
+        })
+
+      })
     </script>
 @endpush
