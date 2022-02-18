@@ -16,7 +16,7 @@ class StudentController extends Controller
     public function index()
     {
         return view('crud.home', [
-            'students'  => Student::all()
+            'students'  => Student::orderBy('created_at', 'desc')->get()
         ]);
     }
 
@@ -38,7 +38,30 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        $request->validate([
+            'nisn'      => 'required|unique:students',
+            'nis'       => 'required|unique:students',
+            'fullName'  => 'required',
+            'phone'     => 'required',
+            'address'   => 'required',
+            'avatar'    => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+
+        $imageName = time().'.'.$request->avatar->extension();  
+       
+        $request->avatar->move(public_path('images'), $imageName);
+
+        Student::create([
+            'nisn'      => $request->nisn,
+            'nis'       => $request->nis,
+            'fullName'  => $request->fullName,
+            'gender'    => $request->gender,
+            'phone'     => $request->phone,
+            'address'   => $request->address,
+            'avatar'    => $imageName
+        ]);
+
+        return redirect('siswa')->with('success', 'Selamat! Data berhasil ditambahkan');    
     }
 
     /**

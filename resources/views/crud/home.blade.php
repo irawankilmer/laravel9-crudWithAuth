@@ -82,12 +82,12 @@
                                 <a href="{{ url('/siswa/'.$student->id) }}" class="btn btn-sm btn-success" title="Detail"><i class="fa fa-eye"></i></a>
                                 <a href="{{ url('/siswa/'.$student->id.'/edit') }}" class="btn btn-sm btn-warning" title="Edit"><i class="fa fa-edit"></i></a>
                                 <form class="d-inline" action="{{ url('/siswa/'.$student->id) }}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-sm btn-danger delete-confirm" data-toggle="tooltip" title="Delete">
-                                      <i class="fa fa-trash"></i>
-                                    </button>
-                                </form>
+                                  @csrf
+                                  @method('DELETE')
+                                  <button class="btn btn-sm btn-danger" onclick="return confirm('Yakin?')" data-toggle="tooltip" title="Delete">
+                                    <i class="fa fa-trash"></i>
+                                  </button>
+                                  </form>
                             </td>
                         </tr>
                         @php
